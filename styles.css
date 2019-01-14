@@ -1,0 +1,14 @@
+body{
+	background-color: black;
+}
+.monkeygifborder {
+	border:10px;
+	border-color: white;
+}
+
+.jsscriptlink {
+	background-image: "images/button.png";
+	border-color:black;
+	border-width: 10px;
+	
+}
