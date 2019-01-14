@@ -71,9 +71,11 @@ function selectDialogue()
 
 function rollDie(dieSides)
 {
-	Math.floor(Math.random() *(dieSides) + 1)
+	let dieResult=Math.floor(Math.random() * dieSides)+ 1;
+	(console.log(dieResult))
 }
-console.log(rollDie(6));// using the parameter area, you can designate any number side of a die.
+console.log(rollDie("6"));// using the parameter area, you can designate any number side of a die.
+
 
 function trumpAction()
 {
