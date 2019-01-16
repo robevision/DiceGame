@@ -1,10 +1,23 @@
 function runDiceGame()
 {
+	//INVENTORY
+	let splinter=false;
+
+	//
 	tellInitialStory();
 	let aggression = buildCharacter();
 	let firstAction=chooseActionPanel(aggression);
+	alert("Now that we've established how enthusiastic you are at being a murdering, self-deprecating, backstabbing, class A certified pirate, let's start exploring the island.");
+	let counter=1
+	do
+	{
 	let firstEvent=leaveDock(aggression,firstAction);
+	enterTown(aggression,firstEvent);	
+	}
+	while(firstEvent>1)
+	{
 	enterTown(aggression,firstEvent);
+	}
 // 	let activityOne=establishAction(firstAction);
 // 	let rollOne=rollDie(6);
 // 		{
@@ -48,10 +61,6 @@ function chooseMove(move)
 	{
 	let result=rollDie(6);
 	return result;
-	}
-	else if (move=="Move")
-	{
-
 	}
 }
 function choosePickUp()
@@ -150,7 +159,7 @@ function selectDialogue()
 
 function trumpAction()
 {
-	alert("That didn't seem to do anything, try again.");
+	alert("That didn't seem to do anything, try again.")
 	//"That didn't seem to do anything" response when no other command is available.
 }
 
@@ -161,56 +170,145 @@ function takeRandomArray(array)
 		return rand;
 }
 
-
+function openInventory(item)
+{
+	if (item=splinter)
+	{
+		let splinter=true;
+		return splinter;
+	}	
+}
 
 //STORY FUNCTIONS ☄
 
 function leaveDock(action, firstChoice)
 {
-	let load=activateAction(firstChoice);
+	let role;
+	let newAction;
+	let load;
+	role="null";
+
+	while(role=="null")
+	{
+		load=activateAction(firstChoice);
 	if (firstChoice=="give" && load >= 3)
 	{
-		alert("You have successfully given away all you have to your name, YOUR LIFE. The End.");
-		endGameByDeath("give");
+		alert("You have nothing to give and no one is around you.")
 	}
 	else if (firstChoice=="use" && load >= 3)
 	{
-		alert("You try to use, but remember you are on a new island with no one to take advantage of anymore! It hurts a little, doesn't it?");
+		alert("You have nothing to use.");
+		// role=0;
 	}
 	else if (firstChoice=="move" && load >= 3)
 	{
 		alert("You move ahead. Now you stand on the literal edge of the pier. What are you doing?");
-		let role=1;
-		return role;
+		// role=1;
+		let secondRoll=load;
+		if (secondRoll >= 6) 
+		{
+		alert("You jump in the water. You can hold your breath for 10 minutes, but cannot swim. Alas as time expires, you expire.")
+		endGameByDeath(drown);
+		}
+		else
+		{
+		alert("You decide that your life as a dishonorable smelly swashbuckler is worth living and step away from the pier's edge.")
+		alert("You move forward towards the dim lights of the town.")
+		role=1;
+		}
 	}
 	else if (firstChoice=="pickup" && load >= 3)
 	{
 		alert("You attempt to pick up whatever is by your feet. Congratulations you have a splinter.");
-		let role=2
+		let inventoryItem=confirm("would you like to keep the splinter?")
+		let choice;
+		if (inventoryItem == true) 
+		{
+  		choice = "You pressed OK!";
+		} 
+		else 
+		{
+  		choice = "You pressed Cancel!";
+		}
+		// role=2
 	}
 	else if (firstChoice=="lookat" && load >= 3)
 	{
-		alert("You look. Theres instant regret when your eyes lock on a decaying seagull that has a pocket sized crab living its' life in.");
-		let role=3
+		if(load>=3 && load!=6 && load!=5)
+		{
+		alert("You look. Theres instant regret when your eyes lock on a decaying seagull that has a pocket sized crab living its' life in.")
+		}
+		else if (load==5 && load!=6) 
+		{
+		alert("You peer out to sea and wonder what you got yourself into. Maybe you should move on?")
+		role=3
+		}
+		else if(load==6)
+		{
+		alert("A majestic sight unfolds of two porpoises mating. Although this is a defining moment for you, it results in no advancement to your quest.")
+		role=3
+		}	
+		else
+		{
+
+		}
 	}
 	else if (firstChoice=="talkto" && load >= 3)
 	{
 		alert("You speak. But no one hears you. Your voice must be heard!");
-		let role=4
+		// role=4
 	}
 	else 
 	{
 		trumpAction()
-		let reRoll=chooseActionPanel(action)
-		leaveDock(action,reRoll)
+		firstChoice=chooseActionPanel(action);
 	}
+	}
+	console.log(role);
+	console.log("this is the first role for leaveDock");
+	return role;
 }
 
 function enterTown(action,situation)
 {
-	if (situation==1)
+	let reRoll;
+
+	if (situation==0)
 	{
-		leaveDock(action)
+		// alert("I am situation 0")
+		// reRoll=chooseActionPanel(action);
+		// leaveDock(action,reRoll);
+	}
+	else if (situation==1) 
+	{
+		alert("You enter the town.")
+		// alert("I am situation 1")
+		// reRoll=chooseActionPanel(action);
+		// leaveDock(action, reRoll);
+	}
+	else if (situation==2) 
+	{
+		// alert("I am situation 2")
+		// reRoll=chooseActionPanel(action);
+		// leaveDock(action, reRoll);
+	}
+	else if (situation==3) 
+	{
+		alert("You notice the dim lights of the town. Should you maybe head off the dock and towards where pirates might be?")
+		reRoll=chooseActionPanel(action);
+		return leaveDock(action, reRoll);
+	}
+	else if (situation==4) 
+	{
+		alert("I am situation 4")
+		reRoll=chooseActionPanel(action);
+		leaveDock(action, reRoll);
+	}
+	else if (situation==5) 
+	{
+		alert("I am situation 5")
+		reRoll=chooseActionPanel(action);
+		leaveDock(action, reRoll);
 	}
 }
 
@@ -238,8 +336,9 @@ function endGameByDeath(death)
 		if (death=="give")
 	{
 		window.open("C:/Users/theri/OneDrive/Workflow Almanac/Project Files (Misc)/DevCodeCamp/JavaScript/DiceGame/gameover.html");
-		alert("Becoming a pirate probably wasn't for you if you literally gave away everything.")
 	}
+		else if (death=="drown")
+		window.open("C:/Users/theri/OneDrive/Workflow Almanac/Project Files (Misc)/DevCodeCamp/JavaScript/DiceGame/gameover.html");
 }
 
 //ACTION FUNCTIONS☆
