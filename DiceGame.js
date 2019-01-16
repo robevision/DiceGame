@@ -3,13 +3,70 @@ function runDiceGame()
 	tellInitialStory();
 	let aggression = buildCharacter();
 	let firstAction=chooseActionPanel(aggression);
-	testingEvent(firstAction);
+	leaveDock(aggression,firstAction);
+// 	let activityOne=establishAction(firstAction);
+// 	let rollOne=rollDie(6);
+// 		{
+// 			while (rollOne==1)
+// 			{
+
+// 				testingEvent(firstAction);
+// 			}
+// 		}	
 }
 	
+// 
 
+function chooseGive(offer)
+{
+	alert("You attempt to offer something.")
+	let result=rollDie(6);
+	return result;
+}
+function chooseUse()
+{
+	alert("You attempt to use something.")
+	let result=rollDie(6);
+	return result;
+}
+
+function chooseMove(move)
+{
+	alert("You attempt to move.")
+	if (move=="move")
+	{
+	let result=rollDie(6);
+	return result;
+	}
+	else if (move=="Move")
+	{
+
+	}
+}
+function choosePickUp()
+{
+	alert("You attempt to pickup something.")
+	let result=rollDie(6);
+	return result;
+}
+
+function chooseLookAt()
+{
+	alert("You attempt to lookat something.")
+	let result=rollDie(6);
+	return result;
+}
+
+function chooseTalkTo()
+{
+	alert("You attempt to speak.")
+	let result=rollDie(6);
+	return result;
+}
 function rollDie(dieSides)
 {
 	let dieResult=Math.floor(Math.random() * dieSides)+ 1;
+	console.log(dieResult);
 	return dieResult;
 
 }
@@ -30,9 +87,7 @@ function buildCharacter()//need to fix. Currently not a function that is applica
 		{
 			console.log("You have chosen a very unmotivated character.");
 			alert("Your enthusiasm for this adventure is lower than getting to the bottom of a barrel of rum.");
-			aggressionLevel=1
 			console.log(aggressionLevel)
-			//aggression = discoverAggression(1)
 			return aggressionLevel;
 		}
 		else if (aggressionLevel==2)
@@ -71,47 +126,7 @@ function buildCharacter()//need to fix. Currently not a function that is applica
 
 
 
-function chooseActionPanel(action)
-{
-	let gamePlayActions;
-	let give;
-	let use;
-	let move;
-	let pickup;
-	let lookat;
-	let talkto;
-	let takeActionArray;
 
-	if (action==1)
-	{
-	let gamePlayActions=["give","give","use","move","pickup","lookat","lookat","lookat","lookat","talkto"];
-	let randomAction = takeRandomArray(gamePlayActions);
-	return;
-	}
-
-	else if (action==2)
-	{
-	let gamePlayActions=["give","use","move","move","pickup","lookat","lookat","lookat","talkto","talkto"];
-	let randomAction = takeRandomArray(gamePlayActions);
-	return;
-	}
-	else if (action==3)
-	{
-	let gamePlayActions=["give","use","use","move","move","move","move","pickup","pickup","lookat","lookat","talkto","talkto"];
-	let randomAction = takeRandomArray(gamePlayActions);
-	return;
-	}
-	else if (action==4)
-	{
-	let gamePlayActions=["give","use","use","move","move","move","move","move","pickup","pickup","lookat","talkto"];
-	let randomAction = takeRandomArray(gamePlayActions);
-	return;
-	}
-	else
-	{
-	console.log("chooseActionPanel is broken")
-	}
-}
 function selectDialogue()
 {
 
@@ -127,58 +142,198 @@ function trumpAction()
 	alert("That didn't seem to do anything, try again.");
 	//"That didn't seem to do anything" response when no other command is available.
 }
-// function chooseMove(move)
-// {
-// 	if move=("move");
-// 	{
-// 		rollDie(6)
-// 	}
-// 	else if move=("Move");
-// 	{
 
-// 	}
-// }
-function chooseGive()
-{}
 function takeRandomArray(array)
 {
 	let rand = array[Math.floor(Math.random() * array.length)];
 		console.log(rand);
-		return;
+		return rand;
 }
 
-function testingEvent(trigger)
+
+
+//STORY FUNCTIONS ☄
+
+function leaveDock(action, firstChoice)
 {
-	if (trigger="give")
+	let load=activateAction(firstChoice);
+	if (firstChoice=="give" && load >= 3)
 	{
-	console.log("true")
+		alert("You have successfully given away all you have to your name, YOUR LIFE. The End.");
+		endGameByDeath(give);
 	}
-	else if (trigger="use")
+	if (firstChoice=="use" && load >= 3)
 	{
-	console.log("true")
+		alert("You try to use, but remember you are on a new island with no one to take advantage of anymore! It hurts a little, doesn't it?");
 	}
-	else if (trigger="move")
+	if (firstChoice=="move" && load >= 3)
 	{
-	console.log("true")
+		alert("You move ahead. Now you stand on the literal edge of the pier. What are you doing?");
 	}
-	else if (trigger="pickup")
+	if (firstChoice=="pickup" && load >= 3)
 	{
-	console.log("true")
+		alert("You attempt to pick up whatever is by your feet. Congratulations you have a splinter.");
 	}
-	else if (trigger="lookat")
+	if (firstChoice=="lookat" && load >= 3)
 	{
-	console.log("true")
+		alert("You look. Theres instant regret when your eyes lock on a decaying seagull that has a pocket sized crab living its' life in.");
 	}
-	else if (trigger="give")
+	if (firstChoice=="talkto" && load >= 3)
 	{
-	console.log("true")
+		alert("You speak. But no one hears you. Your voice must be heard!");
 	}
-	else if (trigger="talkto")
+	else 
 	{
-	console.log("true")
+		trumpAction()
+		let reRoll=chooseActionPanel(action)
+		leaveDock(action,reRoll)
+	}
+	let result=chooseActionPanel(action);
+	console.log(result);
+}
+
+function enterTown(action)
+{
+
+}
+
+function enterBar(action)
+{
+
+}
+
+function enterBackRoom(action)
+{
+
+}
+
+function speakToImportantPirates(action)
+{
+
+}
+
+
+//35 move rolls will get you to win
+
+function endGameByDeath(death)
+{
+	window.open(file:///C:/Users/theri/OneDrive/Workflow%20Almanac/Project%20Files%20(Misc)/DevCodeCamp/JavaScript/DiceGame/gameover.html)
+	if (death==give)
+	{
+		alert("Becoming a pirate probably wasn't for you if you literally gave away everything.")
+	}
+}
+
+//ACTION FUNCTIONS☆
+
+function activateAction(trigger)
+{
+	if (trigger=="give")
+	{
+		let giveAction=chooseGive()
+		return giveAction;
+	}
+	else if (trigger=="use")
+	{
+		let useAction=chooseUse()
+		return useAction;
+	}
+	else if (trigger=="move")
+	{
+		let moveAction=chooseMove()
+		return moveAction;
+	}
+	else if (trigger=="pickup")
+	{
+		let pickUpAction=choosePickUp()
+		return pickUpAction;
+	}
+	else if (trigger=="lookat")
+	{
+		let lookAtAction=chooseLookAt()
+		return lookAtAction;
+	}
+	else if (trigger=="talkto")
+	{
+		let talkToAction=chooseTalkTo()
+		return talkToAction;
 	}
 	else
 	{
-		console.log("testingEvent is broken")
+		console.log("activateAction is broken")
+	}
+}
+//function establishAction(action)
+// {
+// 	let x;
+// 	if (action="give")
+// 	{
+// 		x = chooseGive()
+// 	}
+// 	else if (action="use")
+// 	{
+// 		x = chooseUse()
+// 	}
+// 	else if (action="move")
+// 	{
+// 		chooseMove()
+// 	}
+// 	else if (action="pickup")
+// 	{
+// 		choosePickUp()
+// 	}
+// 	else if (action="lookat")
+// 	{
+// 		chooseLookAt()
+// 	}
+// 	else if (action="talkto")
+// 	{
+// 		chooseTalkTo()
+// 	}
+// 	else
+// 	{
+// 		console.log("establishAction is broken")
+// 	}
+// 	return x;
+
+// }
+function chooseActionPanel(action)
+{
+	let gamePlayActions;
+	let give;
+	let use;
+	let move;
+	let pickup;
+	let lookat;
+	let talkto;
+
+	if (action==1)
+	{
+	let gamePlayActions=["give","give","use","move","pickup","lookat","lookat","lookat","lookat","talkto"];
+	let randomAction = takeRandomArray(gamePlayActions);
+	return randomAction;
+	}
+
+	else if (action==2)
+	{
+	let gamePlayActions=["give","use","move","move","pickup","lookat","lookat","lookat","talkto","talkto"];
+	let randomAction = takeRandomArray(gamePlayActions);
+	return;
+	}
+	else if (action==3)
+	{
+	let gamePlayActions=["give","use","use","move","move","move","move","pickup","pickup","lookat","lookat","talkto","talkto"];
+	let randomAction = takeRandomArray(gamePlayActions);
+	return randomAction;
+	}
+	else if (action==4)
+	{
+	let gamePlayActions=["give","use","use","move","move","move","move","move","pickup","pickup","lookat","talkto"];
+	let randomAction = takeRandomArray(gamePlayActions);
+	return randomAction;
+	}
+	else
+	{
+	console.log("chooseActionPanel is broken")
 	}
 }
