@@ -1,4 +1,10 @@
-body{
+
+.success {
+	background-image: url("images/woodbkgrd.png");
+	background-repeat:repeat-all;
+}
+
+.general {
 	background-color: black;
 }
 .monkeygifborder {
@@ -7,7 +13,7 @@ body{
 }
 
 .jsscriptlink {
-	background-image: "images/button.png";
+	background-image: url("images/button.png");
 	border-color:black;
 	border-width: 10px;
 	
